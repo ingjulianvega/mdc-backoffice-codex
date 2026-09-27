@@ -1,0 +1,6 @@
+{
+  "providedIn": "root",
+  "withInterfaces": true,
+  "useSingleRequestParameter": true,
+  "fileNaming": "kebab-case"
+}

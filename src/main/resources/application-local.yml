@@ -1,0 +1,22 @@
+server:
+  address: 127.0.0.1
+  port: ${PORT:8080}
+spring:
+  datasource:
+    url: jdbc:h2:mem:backoffice;DB_CLOSE_DELAY=-1
+    username: sa
+    password: ""
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+  flyway:
+    enabled: false
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+app:
+  cors:
+    allowed-origins: http://localhost:4200,http://127.0.0.1:4200
