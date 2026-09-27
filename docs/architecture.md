@@ -62,3 +62,21 @@ com.midulcecompania.backoffice
   - Incluirá atributos estándar: `type`, `title`, `status`, `detail`, e `instance`.
   - Para errores de validación de Jakarta Bean Validation, se añadirán propiedades extendidas (`properties`) detallando los campos inválidos y sus respectivos mensajes de error.
 - **Validaciones:** Anotaciones de Jakarta Bean Validation en los DTOs (Records), reflejando strictly las restricciones de nulabilidad, tamaño y longitud del esquema de la base de datos AWS Aurora.
+
+## 9. Convención de Mensajes de Commit (Git Conventional Commits)
+Al finalizar una tarea o generar bloques de código, se debe sugerir un mensaje de commit formateado con la siguiente convención de prefijos y emojis:
+
+| Prefijo | Emoji | Descripción / Uso |
+| :--- | :---: | :--- |
+| `feat:` | ✨ | Funcionalidad nueva |
+| `fix:` | 🐛 | Corrección de un bug |
+| `hotfix:` | 🚑 | Corrección urgente en producción |
+| `refactor:` | ♻️ | Reorganización de código sin cambiar el comportamiento |
+| `docs:` | 📝 | Cambios en la documentación |
+| `test:` | ✅ | Adición o modificación de pruebas |
+| `chore:` | 🔧 | Configuración, dependencias o tareas de mantenimiento |
+| `perf:` | ⚡ | Mejoras de rendimiento |
+
+**Ejemplo de sugerencia esperada:**
+> **Sugerencia de commit:**
+> `✨ feat: implementar filtro dinámico de productos por rango de precio`

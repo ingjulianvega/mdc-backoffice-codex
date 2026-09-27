@@ -43,9 +43,15 @@ class OpenApiIntegrationTest {
                         operation.at("/responses/400/content/application~1problem+json/schema/$ref").asString());
             }
         }
-        assertEquals(10, operationIds.size());
-        for (var type : new String[]{"City", "Department"}) {
-            var resource = type.equals("City") ? "cities" : "departments";
+        assertEquals(15, operationIds.size());
+        assertTrue(operationIds.containsAll(java.util.Set.of("createAddress", "listAddresses",
+                "getAddressById", "updateAddress", "deleteAddress")));
+        for (var type : new String[]{"City", "Department", "Address"}) {
+            var resource = switch (type) {
+                case "City" -> "cities";
+                case "Address" -> "addresses";
+                default -> "departments";
+            };
             var list = root.path("paths").path("/api/v1/" + resource).path("get");
             var ref = list.at("/responses/200/content/*~1*/schema/$ref");
             if (ref.isMissingNode()) {
@@ -56,7 +62,13 @@ class OpenApiIntegrationTest {
                     page.at("/properties/content/items/$ref").asString());
             assertTrue(page.path("properties").has("totalElements"));
             var required = root.path("components").path("schemas").path(type + "RequestDTO").path("required");
-            assertTrue(required.toString().contains("name"));
+            if (type.equals("Address")) {
+                assertTrue(required.toString().contains("streetAddress"));
+                assertTrue(required.toString().contains("cityId"));
+                assertTrue(required.toString().contains("customerId"));
+            } else {
+                assertTrue(required.toString().contains("name"));
+            }
             if (type.equals("City")) {
                 assertTrue(required.toString().contains("departmentId"));
             }
