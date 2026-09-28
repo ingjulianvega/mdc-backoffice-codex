@@ -12,6 +12,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+    @ExceptionHandler(InvalidMaterialPurchaseException.class)
+    ProblemDetail handleInvalidPurchase(InvalidMaterialPurchaseException exception) {
+        return problem(HttpStatus.BAD_REQUEST, exception.getMessage());
+    }
+
     @ExceptionHandler(DuplicateResourceException.class)
     ProblemDetail handleDuplicate(DuplicateResourceException exception) {
         return problem(HttpStatus.CONFLICT, exception.getMessage());

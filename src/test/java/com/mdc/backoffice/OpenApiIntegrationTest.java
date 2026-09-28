@@ -43,7 +43,9 @@ class OpenApiIntegrationTest {
                         operation.at("/responses/400/content/application~1problem+json/schema/$ref").asString());
             }
         }
-        assertEquals(40, operationIds.size());
+        assertEquals(44, operationIds.size());
+        assertTrue(operationIds.containsAll(java.util.Set.of("createMaterialPurchase", "listMaterialPurchases",
+                "getMaterialPurchaseById", "deleteMaterialPurchase")));
         assertTrue(operationIds.containsAll(java.util.Set.of("createAddress", "listAddresses",
                 "getAddressById", "updateAddress", "deleteAddress")));
         assertTrue(operationIds.containsAll(java.util.Set.of("createMaterial", "listMaterials",
