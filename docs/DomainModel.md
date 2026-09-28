@@ -44,7 +44,8 @@ Este documento define la estructura completa de persistencia (Entidades JPA) bas
 - `id`: `UUID` (PK, Not Null)   
 - `customer_id`: `UUID` (FK -> CUSTOMER.id, Not Null)   
 - `order_date`: `TIMESTAMP` (Not Null)   
-- `total_amount`: `BIGINT` (Not Null)   
+- `total_amount`: `BIGINT` (Not Null)  
+- `status`: `VARCHAR(50)` (Not Null)
 - *Campos de Auditoría:* `created_at`, `created_by`, `updated_at`, `updated_by`.
 
 ### TABLA: `CUSTOMERS`
