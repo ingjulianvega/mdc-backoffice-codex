@@ -43,12 +43,13 @@ class OpenApiIntegrationTest {
                         operation.at("/responses/400/content/application~1problem+json/schema/$ref").asString());
             }
         }
-        assertEquals(48, operationIds.size());
+        assertEquals(56, operationIds.size());
         assertTrue(operationIds.containsAll(java.util.Set.of("createOrder", "listOrders",
                 "getOrderById", "deleteOrder")));
         assertEquals("int64", root.at("/components/schemas/OrderResponseDTO/properties/totalAmount/format").asString());
         assertEquals("string", root.at("/components/schemas/OrderResponseDTO/properties/status/type").asString());
         assertEquals("int64", root.at("/components/schemas/OrderItemResponseDTO/properties/subtotal/format").asString());
+        assertEquals("string", root.at("/components/schemas/OrderItemResponseDTO/properties/status/type").asString());
         assertTrue(operationIds.containsAll(java.util.Set.of("createMaterialPurchase", "listMaterialPurchases",
                 "getMaterialPurchaseById", "deleteMaterialPurchase")));
         assertTrue(operationIds.containsAll(java.util.Set.of("createAddress", "listAddresses",

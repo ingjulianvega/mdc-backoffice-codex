@@ -39,10 +39,27 @@ class OrderControllerTest {
     }
 
     OrderResponseDTO response() {
+        return response("PENDING");
+    }
+
+    OrderResponseDTO response(String itemStatus) {
         return new OrderResponseDTO(id,
                 new CustomerResponseDTO(customerId, "CC", "123", "Ana", "Diaz", null, "a@b.co", null, null, null, null),
                 date, 6L, List.of(new OrderItemResponseDTO(
-                        UUID.randomUUID(), productId, "Wax", 2, 3L, 6L, null, null, null)), "PENDING", date);
+                        UUID.randomUUID(), productId, "Wax", 2, 3L, 6L, null, null, null, itemStatus)), "PENDING", date);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"PENDING", "COMPLETED"})
+    void itemStatusIsExposedInListAndDetail(String itemStatus) throws Exception {
+        when(service.findById(id)).thenReturn(response(itemStatus));
+        when(service.findAll(isNull(), isNull(), isNull(), any(Pageable.class)))
+                .thenReturn(new PageImpl<>(List.of(response(itemStatus))));
+        mvc.perform(get(BASE + "/{id}", id)).andExpect(status().isOk())
+                .andExpect(jsonPath("$.items[0].status").value(itemStatus));
+        mvc.perform(get(BASE).param("page", "0").param("size", "10").param("sort", "orderDate,ASC"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content[0].items[0].status").value(itemStatus));
     }
 
     @Test

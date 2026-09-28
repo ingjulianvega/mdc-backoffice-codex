@@ -12,6 +12,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+    @ExceptionHandler(InvalidPetCandleException.class)
+    ProblemDetail handleInvalidPetCandle(InvalidPetCandleException exception) {
+        return problem(HttpStatus.BAD_REQUEST, exception.getMessage());
+    }
+
     @ExceptionHandler(InvalidOrderException.class)
     ProblemDetail handleInvalidOrder(InvalidOrderException exception) {
         return problem(HttpStatus.BAD_REQUEST, exception.getMessage());

@@ -10,6 +10,10 @@ import lombok.*;
 @Entity
 @Table(name = "ORDER_ITEMS")
 public class OrderItemEntity extends AuditableEntity {
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", length = 50, nullable = false)
+    private com.mdc.backoffice.model.enum_.OrderItemStatus status =
+            com.mdc.backoffice.model.enum_.OrderItemStatus.PENDING;
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;

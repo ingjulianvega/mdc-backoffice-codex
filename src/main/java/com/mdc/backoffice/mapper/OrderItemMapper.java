@@ -9,6 +9,7 @@ public interface OrderItemMapper {
     @Mapping(target = "productId", source = "product.id")
     @Mapping(target = "productName", source = "product.name")
     @Mapping(target = "addressId", source = "address.id")
+    @Mapping(target = "status", source = "status")
     OrderItemResponseDTO toResponse(OrderItemEntity entity);
 
     @BeanMapping(ignoreByDefault = true)

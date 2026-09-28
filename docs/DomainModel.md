@@ -60,6 +60,7 @@ Este documento define la estructura completa de persistencia (Entidades JPA) bas
 - *Campos de Auditoría:* `created_at`, `created_by`, `updated_at`, `updated_by`.
 
 ### TABLA: ORDER_ITEMS
+- `status`: `VARCHAR(50)` (Not Null) -- PENDING, COMPLETED
 - `id`: `UUID` (PK, Not Null)   
 - `order_id`: `UUID` (FK -> ORDERS.id, Not Null)   
 - `product_id`: `UUID` (FK -> PRODUCTS.id, Not Null)   

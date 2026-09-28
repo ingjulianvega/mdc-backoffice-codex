@@ -119,3 +119,29 @@ Nota sobre JUnit 5: se verifico con Jupiter 5.14.4, pero SpringExtension del sta
 actual falla con NoSuchMethodError en ExtensionContext.Store.computeIfAbsent.
 Por ello se conserva Jupiter 6 administrado por Spring Boot, con las pruebas
 escritas usando la API org.junit.jupiter.
+
+## Velas de mascotas
+
+La feature 06 agrega los endpoints de creacion, consulta, personalizacion y estados
+en `/api/v1/pet-candles`, y de creacion, listado y eliminacion de fotos en
+`/api/v1/pet-candle-photos`. La migracion V7 crea las tablas y agrega
+`ORDER_ITEMS.status`, incorporado tambien al modelo de dominio.
+
+El POST recibe solo `orderItemId`: inicializa los ocho estados en `PENDING` y
+`petName` como cadena vacia para respetar NOT NULL. El PUT exige un nombre no
+vacio y reemplaza la personalizacion; los campos opcionales omitidos se limpian.
+Un segundo registro para el mismo item devuelve 409.
+
+El PATCH acepta los valores exactos de cada enum; campos omitidos o null conservan
+su valor y un estado invalido devuelve ProblemDetail 400 sin aplicar el parche.
+Al alcanzar los ocho estados finales definidos en la especificacion, completa
+el item y, si todos los items estan completos, la orden. Los endpoints de listado
+y detalle de ordenes incluyen `items[].status` con `PENDING` o `COMPLETED`,
+independientemente del estado global de la orden. Estas escrituras comparten
+una transaccion y un bloqueo de la orden. La especificacion no define propagacion
+inversa: cambiar despues un componente no reabre automaticamente el item o la orden.
+El flag opcional `isPrimary` se conserva tal como se recibe.
+
+Las pruebas `PetCandle*Test` usan Mockito y MockMvc con servicios y mappers reales
+en las pruebas HTTP, sin base de datos. Se pueden ejecutar con
+`./mvnw.cmd "-Dtest=PetCandle*Test" test`.
