@@ -43,13 +43,18 @@ class OpenApiIntegrationTest {
                         operation.at("/responses/400/content/application~1problem+json/schema/$ref").asString());
             }
         }
-        assertEquals(15, operationIds.size());
+        assertEquals(30, operationIds.size());
         assertTrue(operationIds.containsAll(java.util.Set.of("createAddress", "listAddresses",
                 "getAddressById", "updateAddress", "deleteAddress")));
-        for (var type : new String[]{"City", "Department", "Address"}) {
+        assertTrue(operationIds.containsAll(java.util.Set.of("createMaterial", "listMaterials",
+                "createProduct", "listProducts", "createProductRecipe", "listProductRecipes")));
+        for (var type : new String[]{"City", "Department", "Address", "Material", "Product", "ProductRecipe"}) {
             var resource = switch (type) {
                 case "City" -> "cities";
                 case "Address" -> "addresses";
+                case "Material" -> "materials";
+                case "Product" -> "products";
+                case "ProductRecipe" -> "product-recipes";
                 default -> "departments";
             };
             var list = root.path("paths").path("/api/v1/" + resource).path("get");
@@ -66,6 +71,14 @@ class OpenApiIntegrationTest {
                 assertTrue(required.toString().contains("streetAddress"));
                 assertTrue(required.toString().contains("cityId"));
                 assertTrue(required.toString().contains("customerId"));
+            } else if (type.equals("ProductRecipe")) {
+                assertTrue(required.toString().contains("productId"));
+                assertTrue(required.toString().contains("materialId"));
+                assertTrue(required.toString().contains("requiredQuantity"));
+                for (String field : new String[]{"productId", "materialId"}) {
+                    assertEquals("uuid", root.path("components").path("schemas")
+                            .path(type + "RequestDTO").path("properties").path(field).path("format").asString());
+                }
             } else {
                 assertTrue(required.toString().contains("name"));
             }

@@ -95,3 +95,27 @@ fuera de `local`, salvo que establezcas `API_DOCS_ENABLED=true`.
 Se usa JUnit Jupiter 6, compatible con Spring Boot 4.1.1, Mockito y MockMvc.
 La suite comprueba servicios, mappers, HTTP, persistencia y el contrato OpenAPI.
 Springdoc 3.1.1 corresponde a la linea compatible con Spring Boot 4: https://springdoc.org/
+
+## Catalogo, materiales y recetas
+
+CRUD disponible en `/api/v1/materials`, `/api/v1/products` y
+`/api/v1/product-recipes`. Las listas aceptan `page`, `size` y `sort`;
+materiales y productos admiten `name` (coincidencia parcial sin distinguir mayusculas),
+y recetas admiten `productId` y `materialId`, combinados con AND.
+POST devuelve 201 y Location; DELETE devuelve 204.
+
+Ante las diferencias de la especificacion resumida, se aplican los tipos y limites
+de DomainModel.md: nombres de 150 caracteres, precio entero positivo (Long/BIGINT),
+y cantidades BigDecimal con precision 12 y escala 4. El stock puede ser cero;
+la cantidad requerida debe ser estrictamente positiva. PUT recibe el DTO completo
+y valida las referencias de la receta antes de modificarla.
+
+La migracion V3 crea las tres tablas con UUID y claves foraneas. Las pruebas nuevas
+de servicios, Specifications y controladores usan Mockito y WebMvcTest, sin JPA,
+base de datos externa ni H2. Las pruebas previas de persistencia y OpenAPI de la
+suite completa conservan su configuracion H2.
+
+Nota sobre JUnit 5: se verifico con Jupiter 5.14.4, pero SpringExtension del stack
+actual falla con NoSuchMethodError en ExtensionContext.Store.computeIfAbsent.
+Por ello se conserva Jupiter 6 administrado por Spring Boot, con las pruebas
+escritas usando la API org.junit.jupiter.
