@@ -132,7 +132,9 @@ Este documento define la estructura completa de persistencia (Entidades JPA) bas
 - `id`: `UUID` (PK, Not Null)   
 - `company_name`: `VARCHAR(150)` (Not Null)   
 - `contact_name`: `VARCHAR(100)` (Nullable)   
+- `email`: `VARCHAR(150)` (Nullable, Unique)
 - `phone`: `VARCHAR(30)` (Nullable)
+- `tax_id`: `VARCHAR(30)` (Not Null, Unique) — Campo `taxId` en `SupplierEntity`.
 - *Campos de Auditoría:* `created_at`, `created_by`, `updated_at`, `updated_by`.
 
 ## 3. Catálogo de Enumeraciones (Enums)

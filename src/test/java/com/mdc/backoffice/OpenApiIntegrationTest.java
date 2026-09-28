@@ -43,18 +43,23 @@ class OpenApiIntegrationTest {
                         operation.at("/responses/400/content/application~1problem+json/schema/$ref").asString());
             }
         }
-        assertEquals(30, operationIds.size());
+        assertEquals(40, operationIds.size());
         assertTrue(operationIds.containsAll(java.util.Set.of("createAddress", "listAddresses",
                 "getAddressById", "updateAddress", "deleteAddress")));
         assertTrue(operationIds.containsAll(java.util.Set.of("createMaterial", "listMaterials",
                 "createProduct", "listProducts", "createProductRecipe", "listProductRecipes")));
-        for (var type : new String[]{"City", "Department", "Address", "Material", "Product", "ProductRecipe"}) {
+        assertTrue(operationIds.containsAll(java.util.Set.of("createCustomer", "listCustomers",
+                "getCustomerById", "updateCustomer", "deleteCustomer", "createSupplier",
+                "listSuppliers", "getSupplierById", "updateSupplier", "deleteSupplier")));
+        for (var type : new String[]{"City", "Department", "Address", "Material", "Product", "ProductRecipe", "Customer", "Supplier"}) {
             var resource = switch (type) {
                 case "City" -> "cities";
                 case "Address" -> "addresses";
                 case "Material" -> "materials";
                 case "Product" -> "products";
                 case "ProductRecipe" -> "product-recipes";
+                case "Customer" -> "customers";
+                case "Supplier" -> "suppliers";
                 default -> "departments";
             };
             var list = root.path("paths").path("/api/v1/" + resource).path("get");
@@ -79,6 +84,14 @@ class OpenApiIntegrationTest {
                     assertEquals("uuid", root.path("components").path("schemas")
                             .path(type + "RequestDTO").path("properties").path(field).path("format").asString());
                 }
+            } else if (type.equals("Customer")) {
+                assertTrue(required.toString().contains("firstName"));
+                assertTrue(required.toString().contains("documentType"));
+                assertTrue(required.toString().contains("documentNumber"));
+                assertTrue(required.toString().contains("email"));
+            } else if (type.equals("Supplier")) {
+                assertTrue(required.toString().contains("companyName"));
+                assertTrue(required.toString().contains("taxId"));
             } else {
                 assertTrue(required.toString().contains("name"));
             }
