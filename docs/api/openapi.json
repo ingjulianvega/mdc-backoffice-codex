@@ -13,6 +13,18 @@
   ],
   "tags": [
     {
+      "name": "Suppliers",
+      "description": "Gestion del catalogo"
+    },
+    {
+      "name": "Customers",
+      "description": "Gestion del catalogo"
+    },
+    {
+      "name": "Orders",
+      "description": "Pedidos e inventario"
+    },
+    {
       "name": "ProductRecipes",
       "description": "Gestion del catalogo"
     },
@@ -29,6 +41,10 @@
       "description": "Gestion de ciudades"
     },
     {
+      "name": "Material purchases",
+      "description": "Compras de materiales e inventario"
+    },
+    {
       "name": "Materials",
       "description": "Gestion del catalogo"
     },
@@ -38,6 +54,221 @@
     }
   ],
   "paths": {
+    "/api/v1/suppliers/{id}": {
+      "get": {
+        "tags": [
+          "Suppliers"
+        ],
+        "summary": "Consultar por UUID",
+        "operationId": "getSupplierById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Peticion invalida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso no encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflicto de integridad referencial",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Recurso encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SupplierResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Suppliers"
+        ],
+        "summary": "Actualizar recurso",
+        "operationId": "updateSupplier",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SupplierRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Peticion invalida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso no encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflicto de integridad referencial",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Recurso actualizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SupplierResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Suppliers"
+        ],
+        "summary": "Eliminar recurso",
+        "operationId": "deleteSupplier",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Peticion invalida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso no encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflicto de integridad referencial",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Recurso eliminado"
+          }
+        }
+      }
+    },
     "/api/v1/products/{id}": {
       "get": {
         "tags": [
@@ -468,6 +699,96 @@
         }
       }
     },
+    "/api/v1/pet-candles/{id}": {
+      "get": {
+        "tags": [
+          "pet-candle-controller"
+        ],
+        "operationId": "getPetCandleById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "pet-candle-controller"
+        ],
+        "operationId": "updatePetCandle",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PetCandleUpdateDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/materials/{id}": {
       "get": {
         "tags": [
@@ -840,6 +1161,221 @@
         ],
         "summary": "Eliminar departamento",
         "operationId": "deleteDepartment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Peticion invalida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso no encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflicto de integridad referencial",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Recurso eliminado"
+          }
+        }
+      }
+    },
+    "/api/v1/customers/{id}": {
+      "get": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Consultar por UUID",
+        "operationId": "getCustomerById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Peticion invalida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso no encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflicto de integridad referencial",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Recurso encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Actualizar recurso",
+        "operationId": "updateCustomer",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Peticion invalida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso no encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflicto de integridad referencial",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Recurso actualizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Eliminar recurso",
+        "operationId": "deleteCustomer",
         "parameters": [
           {
             "name": "id",
@@ -1328,6 +1864,191 @@
         }
       }
     },
+    "/api/v1/suppliers": {
+      "get": {
+        "tags": [
+          "Suppliers"
+        ],
+        "summary": "Listar con paginacion",
+        "operationId": "listSuppliers",
+        "parameters": [
+          {
+            "name": "companyName",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "taxId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Zero-based page index (0..N)",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "The size of the page to be returned",
+            "required": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "default": 10
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "default": [
+                "companyName,ASC"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Peticion invalida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso no encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflicto de integridad referencial",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Pagina de resultados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseDTOSupplierResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Suppliers"
+        ],
+        "summary": "Crear recurso",
+        "operationId": "createSupplier",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SupplierRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Peticion invalida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso no encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflicto de integridad referencial",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Recurso creado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SupplierResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/products": {
       "get": {
         "tags": [
@@ -1692,6 +2413,244 @@
         }
       }
     },
+    "/api/v1/pet-candles": {
+      "post": {
+        "tags": [
+          "pet-candle-controller"
+        ],
+        "summary": "Create PetCandle",
+        "operationId": "createPetCandle",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PetCandleCreateDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/pet-candle-photos": {
+      "post": {
+        "tags": [
+          "pet-candle-photo-controller"
+        ],
+        "summary": "Create PetCandlePhoto",
+        "operationId": "createPetCandlePhoto",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PetCandlePhotoRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/orders": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Listar pedidos por cliente y fechas inclusivas",
+        "operationId": "listOrders",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Zero-based page index (0..N)",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "The size of the page to be returned",
+            "required": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "default": 10
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "default": [
+                "orderDate,ASC"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Datos invalidos o stock inconsistente",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Pedido, cliente, producto o direccion inexistente",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Pagina de pedidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseDTOOrderResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Registrar pedido y descontar inventario",
+        "operationId": "createOrder",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Datos invalidos o stock inconsistente",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Pedido, cliente, producto o direccion inexistente",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Pedido registrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/materials": {
       "get": {
         "tags": [
@@ -1869,6 +2828,162 @@
         }
       }
     },
+    "/api/v1/material-purchases": {
+      "get": {
+        "tags": [
+          "Material purchases"
+        ],
+        "summary": "Listar compras por proveedor y fechas inclusivas",
+        "operationId": "listMaterialPurchases",
+        "parameters": [
+          {
+            "name": "supplierId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Zero-based page index (0..N)",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "The size of the page to be returned",
+            "required": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "default": 10
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "default": [
+                "purchaseDate,ASC"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Datos invalidos o stock inconsistente",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Compra, proveedor o material inexistente",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Pagina de compras",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseDTOMaterialPurchaseResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Material purchases"
+        ],
+        "summary": "Registrar compra e incrementar inventario",
+        "operationId": "createMaterialPurchase",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MaterialPurchaseRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Datos invalidos o stock inconsistente",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Compra, proveedor o material inexistente",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Compra registrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaterialPurchaseResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/departments": {
       "get": {
         "tags": [
@@ -2031,6 +3146,199 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/DepartmentResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customers": {
+      "get": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Listar con paginacion",
+        "operationId": "listCustomers",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "documentNumber",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Zero-based page index (0..N)",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "The size of the page to be returned",
+            "required": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "default": 10
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "default": [
+                "firstName,ASC"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Peticion invalida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso no encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflicto de integridad referencial",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Pagina de resultados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseDTOCustomerResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Crear recurso",
+        "operationId": "createCustomer",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Peticion invalida",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso no encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflicto de integridad referencial",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Recurso creado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerResponseDTO"
                 }
               }
             }
@@ -2402,44 +3710,412 @@
           }
         }
       }
+    },
+    "/api/v1/pet-candles/{id}/statuses": {
+      "patch": {
+        "tags": [
+          "pet-candle-controller"
+        ],
+        "operationId": "updatePetCandleStatuses",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PetCandleStatusUpdateDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/pet-candles/by-order-item/{orderItemId}": {
+      "get": {
+        "tags": [
+          "pet-candle-controller"
+        ],
+        "operationId": "getPetCandleByOrderItem",
+        "parameters": [
+          {
+            "name": "orderItemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/pet-candle-photos/by-pet-candle/{petCandleId}": {
+      "get": {
+        "tags": [
+          "pet-candle-photo-controller"
+        ],
+        "operationId": "listPetCandlePhotos",
+        "parameters": [
+          {
+            "name": "petCandleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/orders/{id}": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Consultar pedido con sus items",
+        "operationId": "getOrderById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Datos invalidos o stock inconsistente",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Pedido, cliente, producto o direccion inexistente",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Detalle de pedido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Eliminar pedido y reponer inventario",
+        "operationId": "deleteOrder",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Datos invalidos o stock inconsistente",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Pedido, cliente, producto o direccion inexistente",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Pedido eliminado"
+          }
+        }
+      }
+    },
+    "/api/v1/material-purchases/{id}": {
+      "get": {
+        "tags": [
+          "Material purchases"
+        ],
+        "summary": "Consultar compra con sus items",
+        "operationId": "getMaterialPurchaseById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Datos invalidos o stock inconsistente",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Compra, proveedor o material inexistente",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Detalle de compra",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaterialPurchaseResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Material purchases"
+        ],
+        "summary": "Anular compra y descontar inventario",
+        "operationId": "deleteMaterialPurchase",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Datos invalidos o stock inconsistente",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Compra, proveedor o material inexistente",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Compra anulada"
+          }
+        }
+      }
+    },
+    "/api/v1/pet-candle-photos/{id}": {
+      "delete": {
+        "tags": [
+          "pet-candle-photo-controller"
+        ],
+        "operationId": "deletePetCandlePhoto",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiProblem"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
-      "ProductRequestDTO": {
+      "SupplierRequestDTO": {
         "required": [
-          "name",
-          "price",
-          "stockQuantity"
+          "companyName",
+          "taxId"
         ],
         "type": "object",
         "properties": {
-          "name": {
+          "companyName": {
             "maxLength": 150,
             "minLength": 0,
             "type": "string"
           },
-          "description": {
+          "contactName": {
+            "maxLength": 100,
+            "minLength": 0,
             "type": "string"
           },
-          "price": {
-            "minimum": 0,
-            "exclusiveMinimum": true,
-            "type": "integer",
-            "format": "int64"
+          "email": {
+            "maxLength": 150,
+            "minLength": 0,
+            "type": "string",
+            "format": "email"
           },
-          "stockQuantity": {
-            "minimum": 0,
-            "type": "integer",
-            "format": "int32"
+          "phone": {
+            "maxLength": 30,
+            "minLength": 0,
+            "type": "string"
           },
-          "minStockAlert": {
-            "minimum": 0,
-            "type": "integer",
-            "format": "int32"
+          "taxId": {
+            "maxLength": 30,
+            "minLength": 0,
+            "type": "string"
           }
         },
-        "description": "Product request"
+        "description": "Supplier request"
       },
       "ApiProblem": {
         "required": [
@@ -2477,12 +4153,86 @@
             "type": "object",
             "additionalProperties": {
               "type": "string",
-              "description": "Mapa campo -> mensaje; presente solo para errores de validacion."
+              "description": "Mapa campo -\u003e mensaje; presente solo para errores de validacion."
             },
-            "description": "Mapa campo -> mensaje; presente solo para errores de validacion."
+            "description": "Mapa campo -\u003e mensaje; presente solo para errores de validacion."
           }
         },
         "description": "Error ProblemDetail. errors contiene mensajes por campo en errores de validacion."
+      },
+      "SupplierResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "companyName": {
+            "type": "string"
+          },
+          "contactName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "taxId": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string"
+          }
+        },
+        "description": "Supplier response"
+      },
+      "ProductRequestDTO": {
+        "required": [
+          "name",
+          "price",
+          "stockQuantity"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 150,
+            "minLength": 0,
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "price": {
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          "stockQuantity": {
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "minStockAlert": {
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "description": "Product request"
       },
       "ProductResponseDTO": {
         "type": "object",
@@ -2584,6 +4334,41 @@
           }
         },
         "description": "ProductRecipe response"
+      },
+      "PetCandleUpdateDTO": {
+        "required": [
+          "petName"
+        ],
+        "type": "object",
+        "properties": {
+          "petName": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string"
+          },
+          "labelType": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "aromaMaterialId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "customMessage": {
+            "type": "string"
+          },
+          "specie": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "breed": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          }
+        }
       },
       "MaterialRequestDTO": {
         "required": [
@@ -2695,6 +4480,92 @@
           }
         },
         "description": "Department persistido, con identificador y auditoria."
+      },
+      "CustomerRequestDTO": {
+        "required": [
+          "documentNumber",
+          "documentType",
+          "email",
+          "firstName",
+          "lastName"
+        ],
+        "type": "object",
+        "properties": {
+          "documentType": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          },
+          "documentNumber": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          },
+          "firstName": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "lastName": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "phoneNumber": {
+            "maxLength": 30,
+            "minLength": 0,
+            "type": "string"
+          },
+          "email": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string",
+            "format": "email"
+          }
+        },
+        "description": "Customer request"
+      },
+      "CustomerResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "documentType": {
+            "type": "string"
+          },
+          "documentNumber": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "phoneNumber": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string"
+          }
+        },
+        "description": "Customer response"
       },
       "CityRequestDTO": {
         "required": [
@@ -2824,6 +4695,365 @@
         },
         "description": "Direccion persistida con ciudad y auditoria."
       },
+      "PetCandleCreateDTO": {
+        "required": [
+          "orderItemId"
+        ],
+        "type": "object",
+        "properties": {
+          "orderItemId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "PetCandlePhotoRequestDTO": {
+        "required": [
+          "petCandleId",
+          "photoUrl"
+        ],
+        "type": "object",
+        "properties": {
+          "petCandleId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "photoUrl": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string"
+          },
+          "isPrimary": {
+            "type": "boolean"
+          }
+        }
+      },
+      "OrderItemRequestDTO": {
+        "required": [
+          "productId",
+          "quantity",
+          "unitPrice"
+        ],
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "quantity": {
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          "unitPrice": {
+            "minimum": 0,
+            "type": "integer",
+            "format": "int64"
+          },
+          "addressId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "trackingNumber": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "carrierName": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          }
+        }
+      },
+      "OrderRequestDTO": {
+        "required": [
+          "customerId",
+          "items",
+          "orderDate"
+        ],
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "orderDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "items": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderItemRequestDTO"
+            }
+          }
+        }
+      },
+      "OrderItemResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "productId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "productName": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unitPrice": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "subtotal": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "addressId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "trackingNumber": {
+            "type": "string"
+          },
+          "carrierName": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "OrderResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "customer": {
+            "$ref": "#/components/schemas/CustomerResponseDTO"
+          },
+          "orderDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "totalAmount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderItemResponseDTO"
+            }
+          },
+          "status": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "MaterialPurchaseItemRequestDTO": {
+        "required": [
+          "materialId",
+          "quantity",
+          "unitCost"
+        ],
+        "type": "object",
+        "properties": {
+          "materialId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "quantity": {
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "type": "number",
+            "format": "double"
+          },
+          "unitCost": {
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "description": "Material y coste de una linea de compra"
+      },
+      "MaterialPurchaseRequestDTO": {
+        "required": [
+          "items",
+          "supplierId"
+        ],
+        "type": "object",
+        "properties": {
+          "supplierId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "purchaseDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "items": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MaterialPurchaseItemRequestDTO"
+            }
+          }
+        },
+        "description": "Compra de materiales; la fecha omitida usa el instante actual"
+      },
+      "MaterialPurchaseItemResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "materialId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "materialName": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number",
+            "format": "double"
+          },
+          "unitCost": {
+            "type": "number",
+            "format": "double"
+          },
+          "subtotal": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "description": "Detalle de material comprado"
+      },
+      "MaterialPurchaseResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "supplier": {
+            "$ref": "#/components/schemas/SupplierResponseDTO"
+          },
+          "purchaseDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "totalCost": {
+            "type": "number",
+            "format": "double"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MaterialPurchaseItemResponseDTO"
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "description": "Compra con proveedor, importes calculados y detalle"
+      },
+      "PetCandleStatusUpdateDTO": {
+        "type": "object",
+        "properties": {
+          "baseStatus": {
+            "type": "string"
+          },
+          "headStatus": {
+            "type": "string"
+          },
+          "labelStatus": {
+            "type": "string"
+          },
+          "assemblyStatus": {
+            "type": "string"
+          },
+          "boxStatus": {
+            "type": "string"
+          },
+          "shippingGuideStatus": {
+            "type": "string"
+          },
+          "packagingStatus": {
+            "type": "string"
+          },
+          "carrierStatus": {
+            "type": "string"
+          }
+        }
+      },
+      "PageResponseDTOSupplierResponseDTO": {
+        "required": [
+          "content",
+          "first",
+          "last",
+          "number",
+          "size",
+          "totalElements",
+          "totalPages"
+        ],
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SupplierResponseDTO"
+            }
+          },
+          "number": {
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "minimum": 0,
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          }
+        },
+        "description": "Pagina estable del contrato REST; la primera pagina tiene numero 0."
+      },
       "PageResponseDTOProductResponseDTO": {
         "required": [
           "content",
@@ -2918,6 +5148,53 @@
         },
         "description": "Pagina estable del contrato REST; la primera pagina tiene numero 0."
       },
+      "PageResponseDTOOrderResponseDTO": {
+        "required": [
+          "content",
+          "first",
+          "last",
+          "number",
+          "size",
+          "totalElements",
+          "totalPages"
+        ],
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderResponseDTO"
+            }
+          },
+          "number": {
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "minimum": 0,
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          }
+        },
+        "description": "Pagina estable del contrato REST; la primera pagina tiene numero 0."
+      },
       "PageResponseDTOMaterialResponseDTO": {
         "required": [
           "content",
@@ -2965,6 +5242,53 @@
         },
         "description": "Pagina estable del contrato REST; la primera pagina tiene numero 0."
       },
+      "PageResponseDTOMaterialPurchaseResponseDTO": {
+        "required": [
+          "content",
+          "first",
+          "last",
+          "number",
+          "size",
+          "totalElements",
+          "totalPages"
+        ],
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MaterialPurchaseResponseDTO"
+            }
+          },
+          "number": {
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "minimum": 0,
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          }
+        },
+        "description": "Pagina estable del contrato REST; la primera pagina tiene numero 0."
+      },
       "PageResponseDTODepartmentResponseDTO": {
         "required": [
           "content",
@@ -2981,6 +5305,53 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/DepartmentResponseDTO"
+            }
+          },
+          "number": {
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "minimum": 0,
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          }
+        },
+        "description": "Pagina estable del contrato REST; la primera pagina tiene numero 0."
+      },
+      "PageResponseDTOCustomerResponseDTO": {
+        "required": [
+          "content",
+          "first",
+          "last",
+          "number",
+          "size",
+          "totalElements",
+          "totalPages"
+        ],
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerResponseDTO"
             }
           },
           "number": {
